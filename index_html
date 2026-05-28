@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Bahasa Arab - Profesi</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Eczar:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --forest:#24483f;
+      --forest-deep:#18372f;
+      --sage:#dfe8dc;
+      --cream:#f7f2e8;
+      --sand:#eadfca;
+      --gold:#b78945;
+      --ink:#20302b;
+      --muted:#66736d;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+    }
+    .display-font { font-family: 'Eczar', serif; }
+    .soft-shadow { box-shadow: 0 18px 50px rgba(36, 72, 63, .12); }
+    .option-btn {
+      transition: all .22s ease;
+    }
+    .option-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--forest);
+      background: #f2f6f0;
+    }
+    .option-btn.is-selected {
+      background: var(--forest);
+      color: #fff;
+      border-color: var(--forest);
+      box-shadow: 0 10px 24px rgba(36, 72, 63, .18);
+    }
+    .screen {
+      display: none;
+    }
+    .screen.active {
+      display: block;
+      animation: fadeUp .45s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .progress-fill {
+      transition: width .35s ease;
+    }
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,.45);
+      border-top-color: white;
+      border-radius: 999px;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 768px){
+      .hero-grid { grid-template-columns: 1fr !important; }
+      .hero-image-wrap { min-height: 260px; }
+    }
+  </style>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="w-full min-h-screen">
+  <main class="w-full">
+   <section class="w-full px-5 md:px-8 py-6 md:py-8">
+    <div class="max-w-7xl mx-auto">
+     <header class="flex items-center justify-between gap-4 mb-8">
+      <div class="flex items-center gap-3">
+       <div data-template-id="brand-mark" class="canva-container w-11 h-11 rounded-full flex items-center justify-center text-white"><span class="display-font text-2xl">ع</span>
+       </div>
+       <div>
+        <p data-template-id="brand-eyebrow" class="canva-text text-xs uppercase tracking-[0.24em] font-semibold"></p>
+        <h2 data-template-id="brand-title" class="canva-text display-font leading-none"></h2>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-2 text-sm rounded-full px-4 py-2 border border-[#d8d0c0] bg-white/50"><i data-lucide="graduation-cap" class="w-4 h-4"></i> <span data-template-id="header-badge" class="canva-text font-medium"></span>
+      </div>
+     </header>
+     <section id="start-screen" class="screen active">
+      <div class="hero-grid grid grid-cols-[1.08fr_.92fr] gap-6 items-stretch">
+       <div class="rounded-[28px] p-7 md:p-10 soft-shadow bg-white/80 border border-white">
+        <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 mb-5 bg-[#eef3ea] text-[#24483f]"><span class="w-2 h-2 rounded-full bg-[#6b8b73]"></span> <span data-template-id="hero-kicker" class="canva-text text-xs uppercase tracking-[0.2em] font-semibold"></span>
+        </div>
+        <h1 data-template-id="hero-title" class="canva-text display-font max-w-2xl leading-[1.03] mb-4"></h1>
+        <p data-template-id="hero-subtitle" class="canva-text max-w-xl leading-7 mb-8"></p>
+        <form id="start-form" class="rounded-3xl p-5 md:p-6 border border-[#e2dccf] bg-[#fbf8f1]"><label data-template-id="name-label" for="participant-name" class="canva-text block font-semibold mb-2"></label>
+         <div class="flex flex-col sm:flex-row gap-3"><input id="participant-name" type="text" class="w-full rounded-2xl border border-[#d9d0bf] bg-white px-4 py-3.5 outline-none focus:ring-2 focus:ring-[#24483f] focus:border-transparent" data-template-id="name-input"> <button data-template-id="start-button" type="submit" class="canva-button shrink-0 inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 font-semibold text-white transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#24483f]"> </button>
+         </div>
+         <p id="start-error" class="hidden mt-3 text-sm text-[#a04e37]"></p>
+        </form>
+        <div class="grid grid-cols-3 gap-3 mt-6">
+         <div data-template-id="info-card-1" class="canva-card rounded-2xl p-4 bg-[#f6f1e7]">
+          <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center mb-3 text-[#24483f]"><i data-lucide="list-checks" class="w-4 h-4"></i>
+          </div>
+          <p data-template-id="info-card-1-title" class="canva-text text-xs uppercase tracking-[0.14em] font-semibold mb-1"></p>
+          <p data-template-id="info-card-1-value" class="canva-text font-semibold"></p>
+         </div>
+         <div data-template-id="info-card-2" class="canva-card rounded-2xl p-4 bg-[#f6f1e7]">
+          <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center mb-3 text-[#24483f]"><i data-lucide="briefcase-business" class="w-4 h-4"></i>
+          </div>
+          <p data-template-id="info-card-2-title" class="canva-text text-xs uppercase tracking-[0.14em] font-semibold mb-1"></p>
+          <p data-template-id="info-card-2-value" class="canva-text font-semibold"></p>
+         </div>
+         <div data-template-id="info-card-3" class="canva-card rounded-2xl p-4 bg-[#f6f1e7]">
+          <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center mb-3 text-[#24483f]"><i data-lucide="clock-3" class="w-4 h-4"></i>
+          </div>
+          <p data-template-id="info-card-3-title" class="canva-text text-xs uppercase tracking-[0.14em] font-semibold mb-1"></p>
+          <p data-template-id="info-card-3-value" class="canva-text font-semibold"></p>
+         </div>
+        </div>
+       </div>
+       <div class="hero-image-wrap relative rounded-[28px] overflow-hidden soft-shadow min-h-[560px]"><img data-template-id="hero-image" class="canva-image absolute inset-0 w-full h-full object-cover" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#17342f]/80 via-[#17342f]/15 to-transparent"></div>
+        <div class="absolute left-0 right-0 bottom-0 p-7">
+         <div class="w-12 h-[2px] bg-[#d5b477] mb-4"></div>
+         <p data-template-id="image-caption-arabic" class="canva-text display-font text-white mb-1"></p>
+         <p data-template-id="image-caption" class="canva-text text-white/80 text-sm"></p>
+        </div>
+       </div>
+      </div>
+     </section>
+     <section id="quiz-screen" class="screen">
+      <div class="max-w-4xl mx-auto rounded-[28px] bg-white/90 border border-white p-6 md:p-9 soft-shadow">
+       <div class="flex items-start justify-between gap-4 mb-7">
+        <div>
+         <p data-template-id="quiz-kicker" class="canva-text text-xs uppercase tracking-[0.2em] font-semibold mb-2"></p>
+         <h2 data-template-id="quiz-title" class="canva-text display-font leading-tight"></h2>
+        </div>
+        <div class="rounded-2xl px-4 py-2 bg-[#edf3eb] text-[#24483f] text-sm font-semibold"><span id="question-count">1 / 5</span>
+        </div>
+       </div>
+       <div class="h-2 rounded-full bg-[#edf0e8] overflow-hidden mb-8">
+        <div id="progress-fill" class="progress-fill h-full rounded-full bg-[#24483f]" style="width:20%"></div>
+       </div>
+       <div id="questions">
+        <article class="question-panel" data-question-index="0" data-answer="2">
+         <p data-template-id="question-1-label" class="canva-text text-sm font-semibold uppercase tracking-[0.14em] mb-3"></p>
+         <h3 data-template-id="question-1-text" class="canva-text display-font leading-tight mb-7"></h3>
+         <div class="grid gap-3"><button data-template-id="question-1-option-1" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-1-option-2" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-1-option-3" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-1-option-4" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button>
+         </div>
+        </article>
+        <article class="question-panel hidden" data-question-index="1" data-answer="0">
+         <p data-template-id="question-2-label" class="canva-text text-sm font-semibold uppercase tracking-[0.14em] mb-3"></p>
+         <h3 data-template-id="question-2-text" class="canva-text display-font leading-tight mb-7"></h3>
+         <div class="grid gap-3"><button data-template-id="question-2-option-1" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-2-option-2" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-2-option-3" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-2-option-4" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button>
+         </div>
+        </article>
+        <article class="question-panel hidden" data-question-index="2" data-answer="1">
+         <p data-template-id="question-3-label" class="canva-text text-sm font-semibold uppercase tracking-[0.14em] mb-3"></p>
+         <h3 data-template-id="question-3-text" class="canva-text display-font leading-tight mb-7"></h3>
+         <div class="grid gap-3"><button data-template-id="question-3-option-1" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-3-option-2" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-3-option-3" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-3-option-4" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button>
+         </div>
+        </article>
+        <article class="question-panel hidden" data-question-index="3" data-answer="3">
+         <p data-template-id="question-4-label" class="canva-text text-sm font-semibold uppercase tracking-[0.14em] mb-3"></p>
+         <h3 data-template-id="question-4-text" class="canva-text display-font leading-tight mb-7"></h3>
+         <div class="grid gap-3"><button data-template-id="question-4-option-1" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-4-option-2" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-4-option-3" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-4-option-4" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button>
+         </div>
+        </article>
+        <article class="question-panel hidden" data-question-index="4" data-answer="1">
+         <p data-template-id="question-5-label" class="canva-text text-sm font-semibold uppercase tracking-[0.14em] mb-3"></p>
+         <h3 data-template-id="question-5-text" class="canva-text display-font leading-tight mb-7"></h3>
+         <div class="grid gap-3"><button data-template-id="question-5-option-1" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-5-option-2" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-5-option-3" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button> <button data-template-id="question-5-option-4" type="button" class="canva-button option-btn text-left rounded-2xl border border-[#ded6c8] px-5 py-4 bg-[#fffdf8]"></button>
+         </div>
+        </article>
+       </div>
+       <div class="flex justify-between items-center mt-8">
+        <p id="quiz-helper" data-template-id="quiz-helper" class="canva-text text-sm"></p><button id="next-button" data-template-id="next-button" type="button" disabled class="canva-button inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-semibold text-white bg-[#b8c4b9] cursor-not-allowed transition"></button>
+       </div>
+      </div>
+     </section>
+     <section id="result-screen" class="screen">
+      <div class="max-w-4xl mx-auto rounded-[28px] bg-white/90 border border-white p-7 md:p-10 soft-shadow text-center">
+       <div class="w-16 h-16 mx-auto rounded-full bg-[#e7f0e4] flex items-center justify-center text-[#24483f] mb-5"><i data-lucide="trophy" class="w-8 h-8"></i>
+       </div>
+       <p data-template-id="result-kicker" class="canva-text text-xs uppercase tracking-[0.2em] font-semibold mb-2"></p>
+       <h2 data-template-id="result-title" class="canva-text display-font mb-3"></h2>
+       <p data-template-id="result-subtitle" class="canva-text max-w-xl mx-auto mb-8"></p>
+       <div class="inline-flex items-end gap-2 mb-4"><span id="score-number" class="display-font text-[72px] leading-none text-[#24483f]">0</span> <span class="text-xl text-[#6d786f] mb-2">/ 5</span>
+       </div>
+       <p id="result-name" class="font-semibold text-lg mb-2"></p>
+       <p id="save-status" class="text-sm text-[#6c756f] min-h-[20px]"></p>
+       <div class="flex flex-col sm:flex-row justify-center gap-3 mt-8"><button id="retry-button" data-template-id="retry-button" type="button" class="canva-button inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 font-semibold border border-[#24483f] text-[#24483f] bg-white"> </button> <button id="view-results-button" data-template-id="view-results-button" type="button" class="canva-button inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 font-semibold text-white bg-[#24483f]"> </button>
+       </div>
+      </div>
+     </section>
+     <section id="scores-screen" class="screen">
+      <div class="max-w-5xl mx-auto rounded-[28px] bg-white/90 border border-white p-6 md:p-9 soft-shadow">
+       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-7">
+        <div>
+         <p data-template-id="scores-kicker" class="canva-text text-xs uppercase tracking-[0.2em] font-semibold mb-2"></p>
+         <h2 data-template-id="scores-title" class="canva-text display-font leading-tight"></h2>
+        </div><button id="back-home-button" data-template-id="back-home-button" type="button" class="canva-button inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 font-semibold border border-[#d8d1c3] bg-white text-[#24483f]"> </button>
+       </div>
+       <div class="rounded-3xl border border-[#e4ddcf] overflow-hidden">
+        <div class="grid grid-cols-[1.2fr_.7fr_.9fr] gap-3 px-5 py-4 bg-[#f5f0e7] text-xs uppercase tracking-[0.16em] font-semibold text-[#69756f]"><span data-template-id="table-head-name" class="canva-text"></span> <span data-template-id="table-head-score" class="canva-text"></span> <span data-template-id="table-head-date" class="canva-text"></span>
+        </div>
+        <div id="scores-list" class="divide-y divide-[#eee7db] bg-white"></div>
+        <div id="empty-scores" class="px-5 py-10 text-center">
+         <p data-template-id="empty-scores-title" class="canva-text font-semibold mb-1"></p>
+         <p data-template-id="empty-scores-copy" class="canva-text text-sm"></p>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div>
+   </section>
+  </main>
+  <template id="score-row-template">
+   <div data-template-id="score-row" class="canva-list grid grid-cols-[1.2fr_.7fr_.9fr] gap-3 px-5 py-4 items-center">
+    <div>
+     <p data-template-id="score-row-name" class="canva-text font-semibold"></p>
+    </div>
+    <div><span data-template-id="score-row-score" class="canva-tag inline-flex rounded-full px-3 py-1 text-sm font-semibold"></span>
+    </div>
+    <p data-template-id="score-row-date" class="canva-text text-sm"></p>
+   </div>
+  </template>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+    const TOTAL_QUESTIONS = 5;
+    let currentQuestion = 0;
+    let score = 0;
+    let participantName = '';
+    let selectedAnswers = Array(TOTAL_QUESTIONS).fill(null);
+    let currentRecords = [];
+    let dataReady = false;
+
+    const screens = {
+      start: document.getElementById('start-screen'),
+      quiz: document.getElementById('quiz-screen'),
+      result: document.getElementById('result-screen'),
+      scores: document.getElementById('scores-screen')
+    };
+
+    const questionPanels = [...document.querySelectorAll('.question-panel')];
+    const nextButton = document.getElementById('next-button');
+    const helper = document.getElementById('quiz-helper');
+    const questionCount = document.getElementById('question-count');
+    const progressFill = document.getElementById('progress-fill');
+    const startForm = document.getElementById('start-form');
+    const nameInput = document.getElementById('participant-name');
+    const startError = document.getElementById('start-error');
+    const scoreNumber = document.getElementById('score-number');
+    const resultName = document.getElementById('result-name');
+    const saveStatus = document.getElementById('save-status');
+    const scoresList = document.getElementById('scores-list');
+    const emptyScores = document.getElementById('empty-scores');
+
+    function showScreen(name) {
+      Object.values(screens).forEach(screen => screen.classList.remove('active'));
+      screens[name].classList.add('active');
+    }
+
+    function updateQuestionUI() {
+      questionPanels.forEach((panel, index) => {
+        panel.classList.toggle('hidden', index !== currentQuestion);
+      });
+      questionCount.textContent = `${currentQuestion + 1} / ${TOTAL_QUESTIONS}`;
+      progressFill.style.width = `${((currentQuestion + 1) / TOTAL_QUESTIONS) * 100}%`;
+
+      nextButton.disabled = selectedAnswers[currentQuestion] === null;
+      nextButton.classList.toggle('cursor-not-allowed', nextButton.disabled);
+      nextButton.classList.toggle('bg-[#b8c4b9]', nextButton.disabled);
+      nextButton.classList.toggle('bg-[#24483f]', !nextButton.disabled);
+    }
+
+    questionPanels.forEach((panel, qIndex) => {
+      const options = [...panel.querySelectorAll('.option-btn')];
+      options.forEach((option, optionIndex) => {
+        option.addEventListener('click', () => {
+          options.forEach(btn => btn.classList.remove('is-selected'));
+          option.classList.add('is-selected');
+          selectedAnswers[qIndex] = optionIndex;
+          updateQuestionUI();
+        });
+      });
+    });
+
+    startForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const value = nameInput.value.trim();
+      if (!value) {
+        startError.textContent = 'Silakan isi nama peserta terlebih dahulu.';
+        startError.classList.remove('hidden');
+        return;
+      }
+      participantName = value;
+      startError.classList.add('hidden');
+      showScreen('quiz');
+      updateQuestionUI();
+    });
+
+    nextButton.addEventListener('click', () => {
+      if (selectedAnswers[currentQuestion] === null) return;
+
+      const currentPanel = questionPanels[currentQuestion];
+      const correctAnswer = Number(currentPanel.dataset.answer);
+      if (selectedAnswers[currentQuestion] === correctAnswer) {
+        score++;
+      }
+
+      if (currentQuestion < TOTAL_QUESTIONS - 1) {
+        currentQuestion++;
+        updateQuestionUI();
+      } else {
+        completeQuiz();
+      }
+    });
+
+    async function completeQuiz() {
+      scoreNumber.textContent = score;
+      resultName.textContent = participantName;
+      saveStatus.textContent = 'Menyimpan hasil...';
+      showScreen('result');
+
+      if (!dataReady) {
+        saveStatus.textContent = 'Hasil belum dapat disimpan. Silakan coba beberapa saat lagi.';
+        return;
+      }
+
+      if (currentRecords.length >= 999) {
+        saveStatus.textContent = 'Batas maksimal data peserta telah tercapai.';
+        return;
+      }
+
+      const result = await window.dataSdk.create({
+        nama_peserta: participantName,
+        skor: score,
+        total_soal: TOTAL_QUESTIONS,
+        tanggal: new Date().toISOString()
+      });
+
+      if (result.isOk) {
+        saveStatus.textContent = 'Hasil berhasil disimpan.';
+      } else {
+        saveStatus.textContent = 'Hasil belum berhasil disimpan. Silakan coba lagi nanti.';
+      }
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedAnswers = Array(TOTAL_QUESTIONS).fill(null);
+      questionPanels.forEach(panel => {
+        panel.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('is-selected'));
+      });
+      nameInput.value = '';
+      showScreen('start');
+      updateQuestionUI();
+    }
+
+    document.getElementById('retry-button').addEventListener('click', resetQuiz);
+    document.getElementById('view-results-button').addEventListener('click', () => showScreen('scores'));
+    document.getElementById('back-home-button').addEventListener('click', resetQuiz);
+
+    function formatDate(iso) {
+      const date = new Date(iso);
+      return new Intl.DateTimeFormat('id-ID', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      }).format(date);
+    }
+
+    function renderScores(records) {
+      const sorted = [...records].sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+      const existing = new Map([...scoresList.children].map(el => [el.dataset.id, el]));
+
+      sorted.forEach(record => {
+        let row = existing.get(record.__backendId);
+        if (!row) {
+          const fragment = document.getElementById('score-row-template').content.cloneNode(true);
+          row = fragment.firstElementChild;
+          row.dataset.id = record.__backendId;
+          scoresList.appendChild(row);
+        } else {
+          existing.delete(record.__backendId);
+        }
+
+        row.querySelector('[data-template-id="score-row-name"]').textContent = record.nama_peserta;
+        row.querySelector('[data-template-id="score-row-score"]').textContent = `${record.skor}/${record.total_soal}`;
+        row.querySelector('[data-template-id="score-row-date"]').textContent = formatDate(record.tanggal);
+      });
+
+      existing.forEach(el => el.remove());
+      emptyScores.classList.toggle('hidden', records.length > 0);
+    }
+
+    const dataHandler = {
+      onDataChanged(data) {
+        currentRecords = data;
+        renderScores(data);
+      }
+    };
+
+    async function initData() {
+      const initResult = await window.dataSdk.init(dataHandler);
+      dataReady = initResult.isOk;
+    }
+
+    initData();
+    updateQuestionUI();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a02fac535faf0bfb',t:'MTc3OTk5NjYxOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
